@@ -1,17 +1,23 @@
 import { createBrowserRouter, RouterProvider } from "react-router"
 import Home from './ui/Home'
-import Menu, {loader as menuLoader} from './features/menu/Menu'
-import Order from './features/order/Order'
+import Menu, {loader as menuLoader} from './features/menu/Menu' //import named fn loader and name as menuLoader
+import Order, {loader as orderLoader} from './features/order/Order'
 import CreateOrder from './features/order/CreateOrder'
 import Cart from './features/cart/Cart'
 import AppLayout from "./ui/AppLayout"
+import Error from "./ui/Error"
 
 
 function App() {
-  /*This syntax is new in react-router v.6, and it's necessary to enable data loading*/
+  /*
+  This syntax is new in react-router v.6, and it's necessary to enable data loading
+  Using loader property to assign a loader function, which fetches data from a server 
+  ErrorElement: is a property can be assigned in every route which displays an element
+  */
   const router = createBrowserRouter([
     {
       element: <AppLayout />,
+      errorElement: <Error/>,
       children: [
         {
           path: "/",
@@ -20,7 +26,8 @@ function App() {
         {
           path: "/menu",
           element: <Menu />,
-          loader: menuLoader
+          loader: menuLoader,
+          errorElement: <Error/>
         },
         {
           path: "/cart",
@@ -36,7 +43,9 @@ function App() {
         },
         {
           path: "/order/:orderId",
-          element: <Order />
+          element: <Order />,
+          loader: orderLoader,
+          errorElement: <Error/>
         },
       ]
     },

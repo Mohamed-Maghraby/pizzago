@@ -3,6 +3,10 @@ import { useLoaderData } from 'react-router';
 import {getMenu} from '../../services/apiRestaurant'
 
 function Menu() {
+  /*
+  using useLoaderData hook to fetch get the data fetched in the loader, react-router knows exactly which loader 
+  associated with which router since you defined the loader inside the menu defining path in createBrowserRouter 
+  */
   const menu = useLoaderData()
   return (
     <div>
@@ -13,6 +17,7 @@ function Menu() {
     </div>
   )
 }
+//creating a loader fn, inside we use getMenu methods from fns implemented in apiRestaurant
 export async function loader () {
   try {
     const menu = await getMenu()
