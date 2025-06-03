@@ -1,14 +1,18 @@
-import { Link } from 'react-router'
-import SearchOrder from '../features/order/SearchOrder'
+import { Link } from 'react-router';
+import SearchOrder from '../features/order/SearchOrder';
+import Username from '../features/user/Username';
 
 function Header() {
   return (
-    <div>
-        <Link to='/'>PizzaGo</Link>
-        <p>Lorem ipsum dolor</p>
-        <SearchOrder></SearchOrder>
-    </div>
-  )
+    <header className="flex items-center justify-between border-b border-stone-200 bg-yellow-400 px-4 py-3 uppercase sm:px-6">
+      <Link to="/" className="tracking-widest">
+        Fast React Pizza Co.
+      </Link>
+
+      <SearchOrder />
+      <Username />
+    </header>
+  );
 }
 
-export default Header
+export default Header;
