@@ -9,6 +9,7 @@ function MenuItem({ pizza }) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   function handleAddToCart () {
+    //scheme of the new cart object
     const newItem  = {
       pizzaId: id,
       name: name,

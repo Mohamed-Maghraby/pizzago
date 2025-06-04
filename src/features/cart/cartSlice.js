@@ -1,22 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// const cartInit = {
-//     pizzaId: 0,
-//     name: '',
-//     quantity: 0,
-//     unitPrice: 0,
-//     totalPrice: 0,
-
-// }
-
-
 /**
  * Now it's the time to deal with state as an array of object which is frustrating 
  * Notice that in redux it allows us to mutate object and arrays so we don't need to create a deep copy of the array using [...]
  * we can just mutate, which make it easier
  */
 const cartInit = {
-    //array of cart objects, evert object represents a cart 
+    //array of cart objects, every object represents a cart 
     cart: [],
 }
 
@@ -48,5 +38,19 @@ const cartSlice = createSlice({
 })
 
 console.log(cartSlice.actions.addItem());
+
 export const { addItem, deleteItem, increaseItemQuantity, decreaseItemQuantity, clearCart } = cartSlice.actions
 export default cartSlice.reducer
+
+/**
+ * Selectors
+ * We lifted the implementation of this fn from the useSelector in the 
+ * cartOverview Component to her so we can use it elsewhere. This what's called
+ * Redux Selector which selects a state and may run some operations over it, make it reusable,
+ * then we use them in the useSelector hook in any component
+ *
+ * Those Selectors may cause performance issue in larger apps, so 'Reselect' lib 
+ * can be used to enhance it 
+*/
+export const getTotalCartQuantity = (state)=>state.cart.cart.reduce((sum, item)=>sum + item.quantity, 0)
+export const getTotalCartPrice = (state)=>state.cart.cart.reduce((sum, item)=>sum + item.totalPrice, 0)
