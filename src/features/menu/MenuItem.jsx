@@ -1,16 +1,21 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../ui/Button';
 import { formatCurrency } from '../../utils/helpers';
-import { addItem } from '../cart/cartSlice';
+import { addItem, deleteItem, getCurrentQuantityById } from '../cart/cartSlice';
 import { useNavigate } from 'react-router';
+import { Trash } from 'lucide-react';
+import UpdateItemQuantity from '../cart/UpdateItemQuantity';
 
 function MenuItem({ pizza }) {
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  function handleAddToCart () {
+  const currentQuantity = useSelector(getCurrentQuantityById(id))
+  const isInCart = currentQuantity > 0
+
+  function handleAddToCart() {
     //scheme of the new cart object
-    const newItem  = {
+    const newItem = {
       pizzaId: id,
       name: name,
       quantity: 1,
@@ -19,8 +24,9 @@ function MenuItem({ pizza }) {
     }
     dispatch(addItem(newItem))
     // navigate('/cart')
-    
+
   }
+
   return (
     <li className="flex gap-4 py-2">
       <img
@@ -42,7 +48,15 @@ function MenuItem({ pizza }) {
             </p>
           )}
 
-          {!soldOut && <Button type="small" onClick={handleAddToCart}>Add to cart</Button>}
+          <div className='flex flex-row items-center gap-2'>
+            {isInCart && <div className='flex flex-row items-center'>
+              <UpdateItemQuantity pizzaId={id}></UpdateItemQuantity>
+              <Trash onClick={() => dispatch(deleteItem(id))} className={` hover:fill-amber-300 cursor-pointer`} />
+            </div>}
+
+
+            {!soldOut && !isInCart && <Button type="small" onClick={handleAddToCart}>Add to cart</Button>}
+          </div>
         </div>
       </div>
     </li>

@@ -16,20 +16,29 @@ const cartSlice = createSlice({
     reducers: {
         addItem(state, action) {
             state.cart.push(action.payload);
+            state.cart.map((e)=>{
+                console.log(e);
+            })
         },
         deleteItem(state, action) {
+            // const item = state.cart.find((item) => item.pizzaId === action.payload);
+            // console.log(item.quantity);
+            // console.log(state.cart);
+            // if (item.quantity > 1) {
+            //     item.quantity--;
+            //     return;
+            // }
             state.cart = state.cart.filter((c) => c.pizzaId !== action.payload);
-
         },
         increaseItemQuantity(state, action) {
             const item = state.cart.find((item) => item.pizzaId === action.payload);
             item.quantity++;
-            item.quantity = item.quantity * item.unitPrice;
+            item.totalPrice = item.quantity * item.unitPrice;
         },
         decreaseItemQuantity(state, action) {
             const item = state.cart.find((item) => item.pizzaId === action.payload);
             item.quantity--;
-            item.quantity = item.quantity * item.unitPrice;
+            item.totalPrice = item.quantity * item.unitPrice;
         },
         clearCart(state, action) {
             state.cart = [];
@@ -52,5 +61,7 @@ export default cartSlice.reducer
  * Those Selectors may cause performance issue in larger apps, so 'Reselect' lib 
  * can be used to enhance it 
 */
-export const getTotalCartQuantity = (state)=>state.cart.cart.reduce((sum, item)=>sum + item.quantity, 0)
-export const getTotalCartPrice = (state)=>state.cart.cart.reduce((sum, item)=>sum + item.totalPrice, 0)
+export const getCart = state => state.cart.cart;
+export const getTotalCartQuantity = (state)=>state.cart.cart.reduce((sum, item)=>sum + item.quantity, 0);
+export const getTotalCartPrice = (state)=>state.cart.cart.reduce((sum, item)=>sum + item.totalPrice, 0);
+export const getCurrentQuantityById = (id) => (state) => state.cart.cart.find((item) => item.pizzaId === id)?.quantity ?? 0; 
