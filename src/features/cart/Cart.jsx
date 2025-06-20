@@ -12,9 +12,6 @@ function Cart() {
     const cartLength = !!cart.length
     const dispatch = useDispatch()
 
-    console.log(cartLength);
-
-
   return (
     <div className="px-4 py-3">
       <LinkButton to="/menu">&larr; Back to menu</LinkButton>
@@ -24,7 +21,7 @@ function Cart() {
 
       <ul className="mt-3 divide-y divide-stone-200 border-b">
         {cart.map((item) => (
-          <CartItem item={item} key={item.key} />
+          <CartItem item={item} key={item.pizzaId} />
         ))}
       </ul>
 
