@@ -11,6 +11,7 @@ import {
 } from '../../utils/helpers';
 import { useEffect } from 'react';
 import { Pizza } from 'lucide-react';
+import UpdateOrder from './UpdateOrder';
 
 function Order() {
   const order = useLoaderData();
@@ -82,6 +83,7 @@ function Order() {
           To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}
         </p>
       </div>
+      {!priority && <UpdateOrder order={order}></UpdateOrder>}
     </div>
   );
 }
